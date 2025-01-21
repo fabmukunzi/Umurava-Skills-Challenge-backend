@@ -7,12 +7,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/app.js",
-    "dev": "nodemon --exec ts-node src/app.ts",
+    "dev": "npx prisma generate dev && nodemon --exec ts-node src/app.ts",
     "build": "tsc"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "cors": "^2.8.5",
+    "mongodb": "^6.12.0",
     "prisma": "^6.2.1",
     "swagger": "^0.7.5",
     "ts-node": "^10.9.2",

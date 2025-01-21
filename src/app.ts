@@ -3,7 +3,7 @@ import cors from "cors";
 import { config } from "dotenv";
 
 import route from "./routes";
-// import { connectToDB, disconnectFromDB } from "./config/database";
+import { connectToDB, disconnectFromDB } from "./config/database";
 
 config();
 
@@ -19,7 +19,7 @@ app.use(route);
 
 const startServer = async (): Promise<void> => {
   try {
-    // await connectToDB();
+    await connectToDB();
     app.listen(port, () => {
       console.log("Server started ");
     });
@@ -32,7 +32,7 @@ startServer().catch(console.error);
 
 process.on("SIGINT", async () => {
   try {
-    // await disconnectFromDB();
+    await disconnectFromDB();
     process.exit(0);
   } catch (error) {
     console.error("Failed to disconnect from database :", error);

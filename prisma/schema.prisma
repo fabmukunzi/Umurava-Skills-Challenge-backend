@@ -9,6 +9,30 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Challenge {
+  id                 String   @id @default(uuid()) @map("_id") @db.ObjectId
+  title              String
+  deadline           DateTime
+  duration           String
+  moneyPrize         Int
+  projectDescription String
+  projectBrief       String
+  projectTask        String
+  // participanting user
+  participantIDs     String[] @db.ObjectId
+  participants       User[]   @relation(fields: [participantIDs], references: [id])
+}
+
+model User {
+  id           String      @id @default(uuid()) @map("_id") @db.ObjectId
+  name         String
+  email        String      @unique
+  password     String
+  photo        String
+  challengeIDs String[]    @db.ObjectId
+  challenges   Challenge[] @relation(fields: [challengeIDs], references: [id])
 }
