@@ -2,8 +2,8 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { config } from "dotenv";
 
-import route from "./routes";
-import { connectToDB, disconnectFromDB } from "./config/database";
+import route from "./v1/routes";
+import { connectToDB, disconnectFromDB } from "./v1/config/database";
 
 config();
 
@@ -15,7 +15,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 app.use(cors());
 app.use(express.json());
-app.use(route);
+app.use("/api/v1", route);
 
 const startServer = async (): Promise<void> => {
   try {
