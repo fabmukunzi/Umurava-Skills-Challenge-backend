@@ -1,12 +1,10 @@
 import { Router } from "express";
 
-// import auth from "./auth.route";
-// import user from "./user.route";
+import auth from "./auth.route";
 
 const route: Router = Router();
 
-// route.use("/auth", auth);
-// route.use("/auth", user);
+route.use("/auth", auth);
 
 route.use((req, res) => {
   res.status(404).json({

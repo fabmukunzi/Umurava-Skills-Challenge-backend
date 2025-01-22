@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Challenge {
-  id                 String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   title              String
   deadline           DateTime
   duration           String
@@ -28,11 +28,12 @@ model Challenge {
 }
 
 model User {
-  id           String      @id @default(uuid()) @map("_id") @db.ObjectId
-  name         String
-  email        String      @unique
-  password     String
-  photo        String
-  challengeIDs String[]    @db.ObjectId
-  challenges   Challenge[] @relation(fields: [challengeIDs], references: [id])
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String      @unique
+  password       String
+  profilePicture String
+  role           String
+  challengeIDs   String[]    @db.ObjectId
+  challenges     Challenge[] @relation(fields: [challengeIDs], references: [id])
 }
