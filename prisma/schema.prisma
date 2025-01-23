@@ -15,13 +15,14 @@ datasource db {
 
 model Challenge {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  title              String
+  title              String   @unique
   deadline           DateTime
   duration           String
   moneyPrize         Int
   projectDescription String
   projectBrief       String
   projectTask        String
+  category           String
   // participanting user
   participantIDs     String[] @db.ObjectId
   participants       User[]   @relation(fields: [participantIDs], references: [id])
