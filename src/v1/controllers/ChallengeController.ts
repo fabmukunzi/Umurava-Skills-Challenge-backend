@@ -1,4 +1,5 @@
 import prisma from "../../client";
+import { CreateChallengeDTO } from "../dtos/challenge.dto";
 import ChallengeService from "../services/ChallengeService";
 import UserService from "../services/UserService";
 import catchAsync from "../utils/catchAsync";
@@ -19,7 +20,7 @@ export default class ChallengeController {
 
     // get participants who are working on the challenge
     const challengeData = await ChallengeService.findById(challengeId);
-    const assignParticipantToTheChallenge = challengeData?.participantIDs;
+    const assignParticipantToTheChallenge = challengeData?.participantsIDs;
 
     if (!assignParticipantToTheChallenge?.includes(participantId))
       assignParticipantToTheChallenge?.push(participantId);

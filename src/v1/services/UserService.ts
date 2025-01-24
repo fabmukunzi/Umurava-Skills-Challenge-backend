@@ -1,5 +1,5 @@
 import prisma from "../../client";
-import User from "../DTOs/user.dto";
+import User from "../dtos/user.dto";
 
 export default class UserService {
   static async create(user: User) {
