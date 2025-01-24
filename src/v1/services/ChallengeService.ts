@@ -24,7 +24,7 @@ export default class ChallengeService {
       skip,
       include: { participants: true },
     });
-    return challenges.map(this.toResponseDTO);
+    return challenges.map((challenge) => this.toResponseDTO(challenge));
   }
 
   // Find challenge by title
