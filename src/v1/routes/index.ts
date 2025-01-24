@@ -2,11 +2,13 @@ import { Router } from "express";
 
 import auth from "./auth.route";
 import challenge from "./challenge.route";
+import user from "./user.route";
 
 const route: Router = Router();
 
 route.use("/auth", auth);
 route.use("/challenge", challenge);
+route.use("/user", user);
 
 route.use((req, res) => {
   res.status(404).json({

@@ -18,14 +18,21 @@ export default class ChallengeService {
     return await prisma.challenge.create({ data: challenge });
   }
   static async findAll() {
-    return await prisma.challenge.findMany();
+    return await prisma.challenge.findMany({
+      take: 10,
+      skip: 0,
+      include: { participants: true },
+    });
   }
   static async findByName(title: string) {
     return await prisma.challenge.findUnique({ where: { title } });
   }
 
   static async findById(id: string) {
-    return await prisma.challenge.findUnique({ where: { id } });
+    return await prisma.challenge.findUnique({
+      where: { id },
+      include: { participants: true },
+    });
   }
 
   static async update(id: string, challenge: Challenge) {
