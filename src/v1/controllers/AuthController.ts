@@ -66,4 +66,9 @@ export default class AuthController {
       user: safeUser,
     });
   });
+
+  static getAllUsers = catchAsync(async (req, res) => {
+    const user = await UserService.findAll();
+    return Response.success(res, 200, "retrieved", user);
+  });
 }
