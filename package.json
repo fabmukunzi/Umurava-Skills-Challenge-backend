@@ -1,13 +1,13 @@
 {
   "name": "Umurava-Skills-Challenge-backend",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "dist/app.js",
   "repository": "https://github.com/Duncanwar/Umurava-Skills-Challenge-backend.git",
   "author": "Ndanyuzwe Duncan <semunda9@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node --max-old-space-size=450  dist/app.js",
+    "start": "npx prisma generate && node dist/app.js",
     "dev": "npx prisma generate dev && nodemon --exec ts-node src/app.ts",
     "prisma:generate": "npx prisma generate"
   },
