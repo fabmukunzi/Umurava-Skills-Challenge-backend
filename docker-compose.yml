@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  inventory_api:
+  umurava_api:
     container_name: umurava-skills-challenge-backend
     image: duncan/test-app
     ports:
