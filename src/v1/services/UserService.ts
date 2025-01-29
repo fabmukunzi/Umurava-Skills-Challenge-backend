@@ -11,7 +11,11 @@ export default class UserService {
   static async findUserById(id: string) {
     return await prisma.user.findUnique({ where: { id } });
   }
-  static async findAll() {
-    return await prisma.user.findMany();
+  static async findAll(take = 10, skip = 0) {
+    return await prisma.user.findMany({
+      take,
+      skip,
+      include: { challenges: true },
+    });
   }
 }

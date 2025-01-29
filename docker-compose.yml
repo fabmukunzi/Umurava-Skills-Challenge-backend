@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  inventory_api:
+    container_name: umurava-skills-challenge-backend
+    image: duncan/test-app
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/usr/src/app
+    environment:
+      DATABASE_URL: ${DATABASE_URL}

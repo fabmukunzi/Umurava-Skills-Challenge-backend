@@ -20,6 +20,8 @@ model Challenge {
   duration           String
   moneyPrize         Int
   projectDescription String
+  seniority          String
+  skills             String
   projectBrief       String
   projectTask        String
   category           String
