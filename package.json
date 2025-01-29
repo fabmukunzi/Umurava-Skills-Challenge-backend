@@ -1,7 +1,7 @@
 {
   "name": "Umurava-Skills-Challenge-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/Duncanwar/Umurava-Skills-Challenge-backend.git",
   "author": "Ndanyuzwe Duncan <semunda9@gmail.com>",
   "license": "MIT",
