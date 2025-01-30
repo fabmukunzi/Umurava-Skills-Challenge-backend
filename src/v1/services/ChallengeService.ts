@@ -22,7 +22,6 @@ export default class ChallengeService {
     const challenges = await prisma.challenge.findMany({
       take,
       skip,
-      include: { participants: true },
     });
     return challenges.map((challenge) => this.toResponseDTO(challenge));
   }
@@ -63,6 +62,11 @@ export default class ChallengeService {
     });
 
     return { message: "Challenge deleted successfully" };
+  }
+
+  static async deleteAll(): Promise<{ message: string }> {
+    await prisma.challenge.deleteMany();
+    return { message: "All Challenges are deleted successfully" };
   }
 
   // Helper method to transform DB model to response DTO
