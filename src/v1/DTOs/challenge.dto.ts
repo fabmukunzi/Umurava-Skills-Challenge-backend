@@ -5,6 +5,9 @@ export interface CreateChallengeDTO {
   deadline: Date;
   duration: string;
   moneyPrize: number;
+  status: string;
+  skills: string[];
+  seniority: string[];
   projectDescription: string;
   projectBrief: string;
   projectTask: string;
@@ -23,4 +26,7 @@ export interface ChallengeResponseDTO {
   projectTask: string;
   participantsIDs?: string[];
   participants: string;
+  status: string;
+  skills: string[];
+  seniority: string[];
 }

@@ -79,6 +79,9 @@ export default class ChallengeService {
       projectTask: challenge.projectTask,
       participantsIDs: challenge.participantsIDs || [],
       participants: challenge.participants || [],
+      seniority: challenge.seniority || [],
+      skills: challenge.skills || [],
+      status: challenge.status,
     };
   }
 }
