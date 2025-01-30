@@ -1,5 +1,4 @@
 import prisma from "../../client";
-import { CreateChallengeDTO } from "../dtos/challenge.dto";
 import ChallengeService from "../services/ChallengeService";
 import UserService from "../services/UserService";
 import catchAsync from "../utils/catchAsync";
@@ -13,39 +12,30 @@ export default class ChallengeController {
     const challengeData = await ChallengeService.findById(challengeId);
     const assignParticipantToTheChallenge = challengeData?.participantsIDs;
 
-    if (
-      !assignParticipantToTheChallenge?.includes(participantId) &&
-      challengeData?.status === "open"
-    )
-      assignParticipantToTheChallenge?.push(participantId);
-    else
-      return Response.error(
-        res,
-        403,
-        "Already have assigned this challenge to the participant",
-        {}
-      );
-
-    // get the challenge assigned to the participants
     const userData = await UserService.findUserById(participantId);
     const participantChallenge = userData?.challengeIDs;
 
-    if (!participantChallenge?.includes(challengeId))
-      participantChallenge?.push(challengeId);
-    else return Response.error(res, 403, "Already have this challenge", {});
+    if (
+      !assignParticipantToTheChallenge?.includes(participantId) &&
+      challengeData?.status === "open"
+    ) {
+      if (!participantChallenge?.includes(challengeId)) {
+        const updateChallenge = await prisma.challenge.update({
+          where: { id: challengeId },
+          data: { participants: { connect: { id: participantId } } },
+        });
+        const updateUser = await prisma.user.update({
+          where: { id: participantId },
+          data: { challenges: { connect: { id: challengeId } } },
+        });
 
-    const updateUser = await prisma.user.update({
-      where: { id: participantId },
-      data: { challengeIDs: participantChallenge },
-    });
-    const updateChallenge = await prisma.challenge.update({
-      where: { id: challengeId },
-      data: { participantIDs: assignParticipantToTheChallenge },
-    });
-    return Response.success(res, 200, "updated", {
-      updateChallenge,
-      updateUser,
-    });
+        // ✅ Add this success response to ensure a proper return
+        return Response.success(res, 200, "Challenge assigned successfully", {
+          updateChallenge,
+          updateUser,
+        });
+      }
+    }
   });
 
   static createChallenge = catchAsync(async (req, res) => {
@@ -82,7 +72,7 @@ export default class ChallengeController {
   static getOneChallenge = catchAsync(async (req, res) => {
     const { id } = req.params;
     const challenge = await ChallengeService.findById(id);
-    if (!challenge) return Response.error(res, 404, "product not found");
+    if (!challenge) return Response.error(res, 404, "challenge not found");
     return Response.success(res, 200, "Retrieve Challenges", challenge);
   });
 
@@ -90,7 +80,7 @@ export default class ChallengeController {
     const { id } = req.params;
     const data = req.body;
     const challenge = await ChallengeService.findById(id);
-    if (!challenge) return Response.error(res, 404, "product not found");
+    if (!challenge) return Response.error(res, 404, "challenge not found");
     const updateChallenge = await ChallengeService.update(id, data);
     return Response.success(res, 200, "Updated Challenge", updateChallenge);
   });
@@ -114,19 +104,15 @@ export default class ChallengeController {
       include: { _count: { select: { challenges: true } } },
     });
     const participantsNumbers = participants.length;
-    const openChallenges = await prisma.challenge.findMany({
+    const openChallengesNumber = await prisma.challenge.count({
       where: { status: "open" },
     });
-    const openChallengesNumber = openChallenges.length;
-    const ongoingChallenges = await prisma.challenge.findMany({
+    const ongoingChallengesNumber = await prisma.challenge.count({
       where: { status: "ongoing" },
     });
-    const ongoingChallengesNumber = ongoingChallenges.length;
-
-    const completedChallenges = await prisma.challenge.findMany({
+    const completedChallengesNumber = await prisma.challenge.count({
       where: { status: "completed" },
     });
-    const completedChallengesNumber = completedChallenges.length;
 
     return Response.success(res, 200, "admin", {
       challenges,
