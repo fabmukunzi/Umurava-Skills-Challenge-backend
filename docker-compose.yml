@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  challenge_api:
-    container_name: challenge_api_app
+  inventory_api:
+    container_name: inventory_api_app
     image: akashi77/test-app
     ports:
       - 8000:8000
