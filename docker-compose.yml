@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  umurava_api:
-    container_name: umurava-skills-challenge-backend
-    image: duncan/test-app
+  challenge_api:
+    container_name: challenge_api_app
+    image: akashi77/test-app
     ports:
       - 8000:8000
     volumes:
