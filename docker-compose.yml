@@ -1,11 +1,23 @@
 version: '3.8'
+
 services:
-  inventory_api:
-    container_name: inventory_api_app
-    image: akashi77/test-app
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8000:8000
-    volumes:
-      - .:/usr/src/app
+      - "8000:8000"
     environment:
+      NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
