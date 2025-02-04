@@ -6,13 +6,16 @@ import AuthController from "../controllers/AuthController";
 
 const router = Router();
 
-// router.put("", [tokenAuthentication]);
 router.put(
   "/admin/assign_challenge",
   [tokenAuthentication, checkRole("admin", "create")],
   ChallengeController.assignChallenge
 );
 
-router.get("/", AuthController.getAllUsers);
+router.get(
+  "/",
+  [tokenAuthentication, checkRole("admin", "view")],
+  AuthController.getAllUsers
+);
 
 export default router;
