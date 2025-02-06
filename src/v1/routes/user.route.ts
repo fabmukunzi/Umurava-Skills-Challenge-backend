@@ -17,5 +17,10 @@ router.get(
   [tokenAuthentication, checkRole("admin", "view")],
   AuthController.getAllUsers
 );
+router.get(
+  "/:id",
+  [tokenAuthentication, checkRole("user", "view")],
+  AuthController.getOneUser
+);
 
 export default router;

@@ -9,12 +9,22 @@ export default class ChallengeController {
   static assignChallenge = catchAsync(async (req, res) => {
     const { participantId, challengeId } = req.body;
     // get participants who are working on the challenge
-    const challengeData = await ChallengeService.findById(challengeId);
-    const assignParticipantToTheChallenge = challengeData?.participantsIDs;
 
     const userData = await UserService.findUserById(participantId);
-    const participantChallenge = userData?.challengeIDs;
+    const challengeData = await ChallengeService.findById(challengeId);
 
+    if (!userData || !challengeData)
+      return Response.error(res, 404, "User or Challenge not found");
+    const participantChallenge = userData?.challengeIDs;
+    if (userData?.role === "admin")
+      return Response.error(
+        res,
+        403,
+        "You can not assign a challenge to the admin"
+      );
+    const assignParticipantToTheChallenge = challengeData?.participantsIDs;
+    console.log(userData);
+    console.log(challengeData);
     if (
       !assignParticipantToTheChallenge?.includes(participantId) &&
       challengeData?.status === "open"

@@ -71,4 +71,10 @@ export default class AuthController {
     const user = await UserService.findAll();
     return Response.success(res, 200, "retrieved", user);
   });
+
+  static getOneUser = catchAsync(async (req, res) => {
+    const user = await UserService.findUserById(req.params.id);
+    if (!user) return Response.error(res, 404, "User not found");
+    return Response.success(res, 200, "retrieved", user);
+  });
 }

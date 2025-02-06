@@ -9,7 +9,10 @@ export default class UserService {
     return await prisma.user.findUnique({ where: { email } });
   }
   static async findUserById(id: string) {
-    return await prisma.user.findUnique({ where: { id } });
+    return await prisma.user.findUnique({
+      where: { id },
+      include: { challenges: true },
+    });
   }
   static async findAll(take = 10, skip = 0) {
     return await prisma.user.findMany({
