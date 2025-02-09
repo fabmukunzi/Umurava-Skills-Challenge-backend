@@ -12,4 +12,5 @@ export const challengeSchema = Joi.object().keys({
   skills: Joi.array().required(),
   seniority: Joi.array().required(),
   status: Joi.string().required(),
+  submitLink: Joi.string().required(),
 });

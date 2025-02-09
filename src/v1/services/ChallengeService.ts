@@ -86,6 +86,7 @@ export default class ChallengeService {
       seniority: challenge.seniority || [],
       skills: challenge.skills || [],
       status: challenge.status,
+      submitLink: challenge.submitLink || undefined,
     };
   }
 }
