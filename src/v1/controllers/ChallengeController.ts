@@ -7,7 +7,7 @@ import { challengeSchema } from "../validations/Challenge.validation";
 
 export default class ChallengeController {
   static assignChallenge = catchAsync(async (req, res) => {
-    const { participantId, challengeId } = req.body;
+    const { participantId, challengeId, submitLink } = req.body;
     // get participants who are working on the challenge
 
     const userData = await UserService.findUserById(participantId);
@@ -32,7 +32,10 @@ export default class ChallengeController {
       if (!participantChallenge?.includes(challengeId)) {
         const updateChallenge = await prisma.challenge.update({
           where: { id: challengeId },
-          data: { participants: { connect: { id: participantId } } },
+          data: {
+            participants: { connect: { id: participantId } },
+            submitLink: submitLink,
+          },
         });
         const updateUser = await prisma.user.update({
           where: { id: participantId },

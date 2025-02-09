@@ -12,6 +12,7 @@ export interface CreateChallengeDTO {
   projectBrief: string;
   projectTask: string;
   participantsIDs?: string[];
+  submitLink?: string | undefined;
 }
 
 export interface ChallengeResponseDTO {
@@ -29,4 +30,5 @@ export interface ChallengeResponseDTO {
   status: string;
   skills: string[];
   seniority: string[];
+  submitLink?: string;
 }

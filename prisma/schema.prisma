@@ -26,6 +26,7 @@ model Challenge {
   projectBrief       String
   projectTask        String
   category           String
+  submitLink         String?
   // participanting user
   participantIDs     String[] @db.ObjectId
   participants       User[]   @relation(fields: [participantIDs], references: [id])
